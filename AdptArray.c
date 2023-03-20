@@ -23,12 +23,6 @@ PAdptArray CreateAdptArray(COPY_FUNC cf, DEL_FUNC df ,PRINT_FUNC pf){
         return NULL;
 
     parr->ArrSize = 0;//initialize the array size to 0.
-    parr->pElemArr = (PElement*)malloc(sizeof(PElement));//allocate memory for the array of pointers to elements.
-    if(parr->pElemArr == NULL)//the allocation failed.
-    {
-        free(parr);//free the memory allocated for the array struct.
-        return NULL;
-    }
     parr->pElemArr = NULL;//initialize the first element of the array of pointers to elements to NULL.
     parr->delFunc = df;//initialize the delete function.
     parr->copyFunc = cf;//initialize the copy function.
@@ -51,27 +45,27 @@ void DeleteAdptArray(PAdptArray parr){
 
 Result SetAdptArrayAt(PAdptArray parr, int indx, PElement elem){
 
-    if(parr == NULL)//the array is empty.
+   PElement* narr;
+    if (parr == NULL)
         return FAIL;
-    if(indx < 0){//the index is negative.
-        printf("The index is negative");
-        return FAIL;
-    }
-    if(indx >= parr->ArrSize)//the index is out of bounds.
-    {
-        PElement* temp = (PElement*)realloc(parr->pElemArr, (indx+1)*sizeof(PElement));//allocate memory for the array of pointers to elements.
-        if(temp == NULL)//the allocation failed.
+    if (indx >= parr->ArrSize){
+        narr = (PElement*)calloc(indx + 1, sizeof(PElement));
+        if (narr == NULL)
             return FAIL;
-        parr->pElemArr = temp;//update the array of pointers to elements.
-        parr->pElemArr[indx] = parr->copyFunc(elem);//copy the element to the array.
-        parr->ArrSize = indx+1;//update the array size.
-        return SUCCESS;
+        memcpy(narr, parr->pElemArr, parr->ArrSize * sizeof(PElement));
+        free(parr->pElemArr);
+        parr->pElemArr = narr;
     }
-    parr->delFunc(parr->pElemArr[indx]);//delete the element pointed by the pointer at the given index.
-    parr->pElemArr[indx] = parr->copyFunc(elem);//copy the new element to the array.
+    if (parr->pElemArr[indx] != NULL)
+        parr->delFunc(parr->pElemArr[indx]);
+    parr->pElemArr[indx] = parr->copyFunc(elem);
+    if (indx >= parr->ArrSize)
+        parr->ArrSize = indx + 1;
+    else
+        parr->ArrSize = parr->ArrSize;
     return SUCCESS;
-
 }
+    
 
 PElement GetAdptArrayAt(PAdptArray parr, int indx){
     if(parr == NULL)//the array is empty.
