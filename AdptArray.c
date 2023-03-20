@@ -86,7 +86,7 @@ PElement GetAdptArrayAt(PAdptArray parr, int indx){
 }
 int GetAdptArraySize(PAdptArray parr){
     if(parr == NULL)//the array is empty.
-        return 0;
+        return -1;
     return parr->ArrSize;//return the array size.
 }
 void PrintDB(PAdptArray parr){

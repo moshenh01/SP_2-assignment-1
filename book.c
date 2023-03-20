@@ -21,7 +21,7 @@ PElement copy_book(PElement original){
 }
 
 void delete_book(PElement to_del) {
-	printf("delete book called with %s \n",((pbook)to_del)->name);
+	//printf("delete book called with %s \n",((pbook)to_del)->name);
 	pbook b = (pbook)to_del;
 	free(b->name);
 	free(b);

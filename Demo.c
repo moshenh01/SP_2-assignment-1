@@ -23,11 +23,10 @@ int main() {
 	printf("the size is %d\n",GetAdptArraySize(mybooks));  //should print 6
 	pbook b = GetAdptArrayAt(mybooks,4); // should return null;
 	assert(b == NULL); // doesn't fail
-	if ((b == NULL))
-	{
-		printf("b the book is null\n");
-	}
-	
+	// if ((b == NULL))
+	// {
+	// 	printf("b the book is null\n");
+	// }
 	b = GetAdptArrayAt(mybooks,3);
 	printf("the book is %s\n",b->name); //should print "Harry Potter"
 	PrintDB(mybooks);
@@ -41,22 +40,23 @@ int main() {
 	PrintDB(HP_caracters); // prints:
 	//first name: Harry last name: Potter id: 934
         //first name: Ron last name: Weasley id: 789
-	printf("done 1\n");
+
+	//printf("done 1\n");
 	DeleteAdptArray(mybooks);
-	printf("done 2\n");
+	//printf("done 2\n");
 	DeleteAdptArray(HP_caracters);
-	printf("done 3\n");
+	//printf("done 3\n");
 	delete_book(b1);
-	printf("done 4\n");
+	//printf("done 4\n");
 	delete_book(b2);
-	printf("done 5\n");
+	//printf("done 5\n");
 	
 	delete_book(b);
 	
-	printf("done 6\n");
+	//printf("done 6\n");
 	delete_person(p1);
-	printf("done 7\n");
+	
 	delete_person(p2);
-	printf("done 8\n");
+	
 	return 0;
 }
